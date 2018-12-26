@@ -10,9 +10,9 @@ module.exports = {
         path: path.resolve(__dirname,'dist'),
         filename: "bundle.js"
     },
-    devServer: {  //配置dev-server命名参数的第二种方式
+    devServer: {  //配置dev-server命名参数的第二种方式,生成的bundle.js存放在内存中
         open: false, //自动打开浏览器
-        port: 3000,
+        port: 3001,
         contentBase: "src",
         hot: true  //热更新
     },
@@ -35,14 +35,22 @@ module.exports = {
                         name: "img/[name].[hash:7].[ext]"
                     }
                 }]
+            },
+            // 配置解析es6高级语法的babel-loader,需要使用exclude去除掉node_modules的文件，或者使用include
+            { test: /\.js$/, use: "babel-loader",
+                // 使用exclude不编译node_module中的所有文件,但是modules/webpack-dev-server/client需要编译，因此使用include
+                //exclude: /node_modules/
+                include: [path.join(__dirname,"./src"), path.join(__dirname,"node_modules/webpack-dev-server/client")]
             }
         ]
     },
     plugins: [
-        new webpack.HotModuleReplacementPlugin(), //热更新模块
+        //热更新模块
+        new webpack.HotModuleReplacementPlugin(),
+        // 创建一个在內存中生成html页面的插件
         // 作用1：在內存中创建页面
         //     2：自动将打包好的js文件追加到內存中頁面中
-        new htmlWebpackPlugin({     // 创建一个在內存中生成html页面的插件
+        new htmlWebpackPlugin({
             template: path.join(__dirname, "./src/index.html"),
             filename: "index.html"
         })
