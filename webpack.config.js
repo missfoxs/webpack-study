@@ -3,6 +3,8 @@ const path = require("path");
 const webpack = require("webpack");
 // 导入在內存中生成html页面的插件
 const htmlWebpackPlugin = require("html-webpack-plugin");
+//Vue Loader v15 现在需要配合一个 webpack 插件才能正确使用
+const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 module.exports = {
     entry: "./src/main.js",
@@ -41,7 +43,8 @@ module.exports = {
                 // 使用exclude不编译node_module中的所有文件,但是modules/webpack-dev-server/client需要编译，因此使用include
                 //exclude: /node_modules/
                 include: [path.join(__dirname,"./src"), path.join(__dirname,"node_modules/webpack-dev-server/client")]
-            }
+            },
+            { test: /\.vue$/, use: "vue-loader" }
         ]
     },
     plugins: [
@@ -49,10 +52,17 @@ module.exports = {
         new webpack.HotModuleReplacementPlugin(),
         // 创建一个在內存中生成html页面的插件
         // 作用1：在內存中创建页面
-        //     2：自动将打包好的js文件追加到內存中頁面中
+        //     2：自动将打包好的js文件追加到內存页面中
         new htmlWebpackPlugin({
-            template: path.join(__dirname, "./src/index.html"),
-            filename: "index.html"
-        })
+            title: 'webpack demo',  //设置title的名字
+            template: path.join(__dirname, "./src/index.html"),  //要使用的模块路径
+            filename: "index.html",   //生成的内存页面的名称
+            inject: 'body', //把模板注入到哪个标签后
+            minify: false, //是否压缩
+            hash: true, //是否hash化
+            cache: false, //是否缓存
+            showErrors: false //是否显示错误
+        }),
+        new VueLoaderPlugin()
     ]
 };

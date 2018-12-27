@@ -1,11 +1,14 @@
 
-// import在瀏覽器中會報錯，
+// import在浏览器中会报错，
 import $ from "jquery";
-// webpack默認只能處理js文件，其他的包括css都不行，需要手動安裝合適的第三方loader加載器
-// 處理css需要安裝style-loader, css-loader。在webpack中新增module配置節點，
+// webpack默认只能处理js文件，其他的包括css都不行，需要手动安装合适的第三方loader加载器
+// 处理css需要安裝style-loader, css-loader。在webpack中新增module配置节点，
 import "./css/main.css";
 import "./css/index.less";
 import "./css/index.scss";
+
+import Vue from "vue";
+import Hello from "./js/hello.vue";
 
 $(function () {
    // $("li:odd").css("backgroundColor", "red");
@@ -22,4 +25,16 @@ $(function () {
     //3 webpack.config.js中配置
     //4 添加.babelrc解析文件
     console.log(Person.staticMethod());
+
+    let vm = new Vue({
+        el: "#app",
+        data: {
+            msg: "this is a message"
+        },
+        components: {
+            Hello
+        },
+        render: c => c(Hello)
+        // template: '<Hello/>'
+    });
 });
