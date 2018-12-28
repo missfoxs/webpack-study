@@ -8,7 +8,11 @@ import "./css/index.less";
 import "./css/index.scss";
 
 import Vue from "vue";
+
 import Hello from "./js/hello.vue";
+
+//使用es6定义的方法导入
+import router from "./js/router/router.js";
 
 $(function () {
    // $("li:odd").css("backgroundColor", "red");
@@ -34,6 +38,8 @@ $(function () {
         components: {
             Hello
         },
+        router,  //引入路由
+        // 使用render渲染的组件会替换掉#app,因此，app中原本所有的东西都会被覆盖掉
         render: c => c(Hello)
         // template: '<Hello/>'
     });
