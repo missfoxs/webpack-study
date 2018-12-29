@@ -1,6 +1,7 @@
 <template>
     <div>
         这是登录页面
+        <div class="huzi"></div>
     </div>
 </template>
 <script>

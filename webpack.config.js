@@ -7,6 +7,7 @@ const htmlWebpackPlugin = require("html-webpack-plugin");
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
 module.exports = {
+    mode: "production",  // 在webpack4.x中必须要有的参数，可以取production和development两个值。
     entry: "./src/main.js",
     output: {
         path: path.resolve(__dirname,'dist'),
@@ -64,5 +65,9 @@ module.exports = {
             showErrors: false //是否显示错误
         }),
         new VueLoaderPlugin()
-    ]
+    ],
+    // 清除掉WARING提示
+    performance: {
+        hints: false
+    }
 };
