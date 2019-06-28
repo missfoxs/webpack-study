@@ -3,13 +3,16 @@
 import $ from "jquery";
 // webpack默认只能处理js文件，其他的包括css都不行，需要手动安装合适的第三方loader加载器
 // 处理css需要安裝style-loader, css-loader。在webpack中新增module配置节点，
-import "./css/main.css";
+import "./css/main";
 import "./css/index.less";
 import "./css/index.scss";
 
 import Vue from "vue";
 
 import Hello from "./js/hello.vue";
+
+import testLoader from '../testLoader.html'
+//console.log(testLoader);
 
 //使用es6定义的方法导入
 import router from "./js/router/router.js";
